@@ -17,15 +17,18 @@ jobs:
           distribution: temurin
           java-version: '17'
 
+      - 
       - name: Install Android SDK
         run: |
-          mkdir -p "$ANDROID_HOME/cmdline-tools/latest"
-          cd "$ANDROID_HOME/cmdline-tools/latest"
+          mkdir -p "$ANDROID_HOME/cmdline-tools"
+          cd "$ANDROID_HOME/cmdline-tools"
           curl -o sdk.zip https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
           unzip -q sdk.zip
-          mv cmdline-tools/* .
-          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses
-          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+          mkdir -p latest
+          mv cmdline-tools/* latest/
+          yes | latest/bin/sdkmanager --licenses
+          latest/bin/sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+          
 
       - name: Build APK
         run: |
